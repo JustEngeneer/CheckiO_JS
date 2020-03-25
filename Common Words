@@ -1,0 +1,59 @@
+"use strict";
+
+function commonWords(first, second) {
+    let res_str = "";
+    let cur_str = first;
+    let cur_word = "";
+    let arr = [];
+    let pos = cur_str.indexOf(",");
+    let i = 0;
+    let j = 0;
+    let n = 0;
+    let t = "";
+    let delim = "";
+    let test_res = "";
+    let firstAttempt = 0;
+    
+    while (pos > 0) {
+        cur_word = cur_str.substring(0,pos);
+        cur_str  = cur_str.substring(pos+1); 
+        
+        if (second.includes(cur_word)) {
+            //  bingo
+            arr.push(cur_word);
+            }    
+        pos = cur_str.indexOf(",");
+    }
+    //  Here we must check the remainder of cur_str
+    if (cur_str.length > 0 & second.includes(cur_str)) {
+        arr.push(cur_str);
+    }
+/*    
+    n = arr.length;
+    if (n > 0) {
+        for (i = 0; i < n-1; i++) { 
+            for (j = 0; j < n-1-i; j++) { 
+                if (arr[j+1] < arr[j]) { 
+                    t = arr[j+1]; arr[j+1] = arr[j]; arr[j] = t; 
+                }
+            }
+       }
+    }   
+*/    
+    i = 0;
+    while (i++ < arr.length) {
+       res_str += delim + arr.shift();
+       delim = ",";
+    }    
+
+return res_str;
+}
+
+var assert = require('assert');
+
+if (!global.is_checking) {
+    assert.equal(commonWords("hello,world", "hello,earth"), "hello", "Hello");
+    assert.equal(commonWords("one,two,three", "four,five,six"), "", "Too different");
+    assert.equal(commonWords("one,two,three", "four,five,one,two,six,three"), "one,three,two", "1 2 3");
+    console.log("Coding complete? Click 'Check' to review your tests and earn cool rewards!");
+}
