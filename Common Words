@@ -11,14 +11,12 @@ function commonWords(first, second) {
     let n = 0;
     let t = "";
     let delim = "";
-    let test_res = "";
-    let firstAttempt = 0;
     
     while (pos > 0) {
         cur_word = cur_str.substring(0,pos);
         cur_str  = cur_str.substring(pos+1); 
         
-        if (second.includes(cur_word)) {
+        if (second.includes(","+cur_word) |  second.includes(cur_word+",")) {
             //  bingo
             arr.push(cur_word);
             }    
