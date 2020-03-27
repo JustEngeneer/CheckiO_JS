@@ -1,5 +1,22 @@
 "use strict";
 
+function transform(str, strSet) {
+    //  The str is a string in which words are comma-separated
+    let pos = str.indexOf(",");
+    let word;
+    
+    while (pos > 0) {
+        word = substring(0,pos);
+        strSet.add(word);
+        str  = str.substring(pos+1); 
+        pos = str.indexOf(",");
+    }
+    if (str.length > 0) {
+        strSet.add(str);
+    }
+    return strSet;
+}
+
 function commonWords(first, second) {
     let res_str = "";
     let cur_str = first;
@@ -11,7 +28,14 @@ function commonWords(first, second) {
     let n = 0;
     let t = "";
     let delim = "";
+    let strSet;
+    let sizeSet;
+    let strSet = new Set();
     
+//    console.log("bla bla");
+    transform(second,strSet);
+    sizeSet = strSet.size;
+/*    
     while (pos > 0) {
         cur_word = cur_str.substring(0,pos);
         cur_str  = cur_str.substring(pos+1); 
@@ -41,8 +65,9 @@ function commonWords(first, second) {
        res_str += delim + arr.shift();
        delim = ",";
     }    
-
-return res_str;
+*/
+//return res_str;
+return sizeSet;
 
 }
 
