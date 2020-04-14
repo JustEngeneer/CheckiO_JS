@@ -1,31 +1,42 @@
 "use strict";
 
+function transform(str, strSet) {
+    //  The str is a string in which words are comma-separated
+    let pos = str.indexOf(",");
+    let word;
+    
+    while (pos > 0) {
+        word = str.substring(0,pos);
+        strSet.add(word);
+        str  = str.substring(pos+1); 
+        pos = str.indexOf(",");
+    }
+    if (str.length > 0) {
+        strSet.add(str);
+    }
+    return strSet;
+}
+
 function commonWords(first, second) {
+    let firstSet = new Set();
+    let secondSet = new Set();
     let res_str = "";
-    let cur_str = first;
-    let cur_word = "";
     let arr = [];
-    let pos = cur_str.indexOf(",");
     let i = 0;
     let j = 0;
     let n = 0;
     let t = "";
     let delim = "";
     
-    while (pos > 0) {
-        cur_word = cur_str.substring(0,pos);
-        cur_str  = cur_str.substring(pos+1); 
-        
-        if (second.includes(","+cur_word) |  second.includes(cur_word+",")) {
-            //  bingo
-            arr.push(cur_word);
-            }    
-        pos = cur_str.indexOf(",");
-    }
-    //  Here we must check the remainder of cur_str
-    if (cur_str.length > 0 & second.includes(cur_str)) {
-        arr.push(cur_str);
-    }
+    transform(first,firstSet);
+    transform(second,secondSet);
+    
+    firstSet.forEach((value, valueAgain, firstSet) => {
+        if (secondSet.has(value)) {
+            arr.push(value);
+        }
+    });
+    
     n = arr.length;
     if (n > 0) {
         for (i = 0; i < n-1; i++) { 
@@ -41,9 +52,7 @@ function commonWords(first, second) {
        res_str += delim + arr.shift();
        delim = ",";
     }    
-
-return res_str;
-
+    return res_str;
 }
 
 var assert = require('assert');
