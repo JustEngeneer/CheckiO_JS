@@ -1,0 +1,51 @@
+"use strict";
+
+function countOccur(data,val) {
+    let index = 0;
+    let numberOccur = 0;
+    
+    while (index < data.length) {
+        if (val == data[index]) {
+            ++numberOccur;
+        }
+        ++index;
+    }
+    return numberOccur;
+}
+
+function mostFrequent(data) {
+    // returns the most frequenly occuring string in the given array
+    let maxNumberOccur = 0;
+    let curNumberOccur = 0;
+    let stringMaxOccur = '';
+    let uniqueData = new Set(data);
+    data.sort();
+    uniqueData.forEach((val, valAgain, dataSet) => {
+        curNumberOccur = countOccur(data,val); 
+        if (curNumberOccur > maxNumberOccur) {
+            maxNumberOccur = curNumberOccur;    
+            stringMaxOccur = val;
+        }
+    })
+    
+    return stringMaxOccur;
+}
+
+var assert = require('assert');
+
+if (!global.is_checking) {
+    console.log('Example:')
+    console.log(mostFrequent([
+        'a', 'b', 'c', 
+        'a', 'b',
+        'a'
+    ]))
+    
+    assert.equal(mostFrequent([
+        'a', 'b', 'c', 
+        'a', 'b',
+        'a'
+    ]), 'a')
+    assert.equal(mostFrequent(['a', 'a', 'bi', 'bi', 'bi']), 'bi')
+    console.log("Coding complete? Click 'Check' to review your tests and earn cool rewards!");
+}
