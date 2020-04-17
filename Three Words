@@ -1,0 +1,40 @@
+"use strict";
+let numberSet = new Set(['0','1','2','3','4','5','6','7','8','9']);
+
+function checkWord(Word) {
+    if (numberSet.has(Word[0])) { return false; }    
+    else { return true; }
+}    
+function threeWords(data) {
+    let find3word = false;
+    let myData = data + ' ';
+    let curWord = '';
+    let wordCount = 0;
+    let posSpace = myData.indexOf(' ');
+    
+    while (posSpace > 0) {
+        curWord = myData.slice(0,posSpace);
+        if (checkWord(curWord)) { ++wordCount; }    
+        else { wordCount = 0; }
+        
+        if (wordCount > 2) {
+            find3word = true;
+            break;
+        }
+        myData = myData.substr(posSpace + 1);
+        posSpace = myData.indexOf(' ');
+    }
+    
+    return find3word;
+}
+
+var assert = require('assert');
+
+if (!global.is_checking) {
+    assert.equal(threeWords("Hello World hello"), true, "1st example");
+    assert.equal(threeWords("He is 123 man"), false, "2nd example");
+    assert.equal(threeWords("1 2 3 4"), false, "3rd example");
+    assert.equal(threeWords("bla bla bla bla"), true, "4th example");
+    assert.equal(threeWords("Hi"), false, "Letters");
+    console.log("Coding complete? Click 'Check' to review your tests and earn cool rewards!");
+}
